@@ -1,55 +1,50 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OMI Expenses</title>
-
-    <link rel="stylesheet" href="style.css">
+    style.css
 </head>
-
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <h1>OMI Expenses</h1>
+    <h1>OMI Expenses</h1>
 
-        <input id="date" type="date">
+    <input id="date" type="date">
 
-        <input
-            id="amount"
-            type="number"
-            placeholder="Importo (€)"
-            step="0.01">
+    <input
+        id="amount"
+        type="number"
+        placeholder="Importo (€)"
+        step="0.01">
 
-        <select id="category">
-            <option>HOTEL</option>
-            <option>BREAKFAST</option>
-            <option>LUNCH</option>
-            <option>DINNER</option>
-            <option>PARKING</option>
-            <option>GASOLINE</option>
-            <option>TAXI</option>
-        </select>
+    <select id="category">
+        <option>HOTEL</option>
+        <option>BREAKFAST</option>
+        <option>LUNCH</option>
+        <option>DINNER</option>
+        <option>PARKING</option>
+        <option>GASOLINE</option>
+        <option>TAXI</option>
+    </select>
 
-        <input
-            id="receipt"
-            type="file"
-            accept="image/*"
-            capture="environment">
+    <input
+        id="receipt"
+        type="file"
+        accept="image/*">
 
-        <button onclick="saveExpense()">
-            Salva
-        </button>
+    <button onclick="saveExpense()">
+        Salva
+    </button>
 
-        <div id="expenses"></div>
+    <div id="expenses"></div>
 
-    </div>
+</div>
 
-    /npm/@supabase/supabase-js@2"></script>
-    "></script>
+https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2
+<script src="app.js"></script>
 
 </body>
-
 </html>
