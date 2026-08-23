@@ -144,31 +144,27 @@ async function loadExpenses() {
 
     result.data.forEach(expense => {
 
-      let imageHtml = "";
+      let imageHtml = `
+  <div style="margin-top:10px;">
 
-      if (expense.receipt_url) {
+    expense.receipt_url}"
+      style="
+        width:100%;
+        max-width:250px;
+        border-radius:8px;
+        border:1px solid #ddd;
+      "
+    />
 
-        imageHtml = `
-          <div style="margin-top:10px;">
+    <br><br>
 
-            ${expense.receipt_url}="
-                width:100%;
-                max-width:250px;
-                border-radius:8px;
-                border:1px solid #ddd;
-              "
-            >
+    ${expense.receipt_url} target="_blank"
+    >
+      📷 Apri scontrino
+    </a>
 
-            <br><br>
-
-            _url}"
-              target="_blank"
-            >
-              📷 Apri scontrino
-            </a>
-
-          </div>
-        `;
+  </div>
+`;
       }
 
       container.innerHTML += `
