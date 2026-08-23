@@ -116,12 +116,9 @@ async function loadExpenses() {
       await supabaseClient
         .from("expenses")
         .select("*")
-        .order(
-          "expense_date",
-          {
-            ascending: false
-          }
-        );
+        .order("expense_date", {
+          ascending: false
+        });
 
     if (error) {
       console.error(error);
@@ -139,42 +136,26 @@ async function loadExpenses() {
 
       if (expense.receipt_url) {
 
-        imageHtml = `
-          ${expense.receipt_url}
-
-          <br>
-
-          ipt_url}"
-            target="_blank"
-          >
-            📷 Apri scontrino
-          </a>
-        `;
+        imageHtml =
+          '<br>' +
+          '' + expense.receipt_url + '' +
+          '<br><br>' +
+          '' + expense.receipt_url + '' +
+          '📷 Apri scontrino' +
+          '</a>';
       }
 
-      container.innerHTML += `
-        <div class="card">
+      container.innerHTML +=
+        '<div class="card">' +
+        '<b>' + expense.expense_date + '</b><br>' +
+        expense.category + '<br>' +
+        '€ ' + expense.amount + '<br>' +
+        imageHtml +
+        '</div>';
 
-          <b>${expense.expense_date}</b>
-
-          <br>
-
-          ${expense.category}
-
-          <br>
-
-          € ${expense.amount}
-
-          <br>
-
-          ${imageHtml}
-
-        </div>
-      `;
     });
 
-  }
-  catch(error) {
+  } catch(error) {
 
     console.error(error);
 
