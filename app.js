@@ -14,34 +14,69 @@ const supabaseClient =
 
 async function saveExpense() {
 
-  const date =
-    document.getElementById("date").value;
+    const date =
+        document.getElementById("date").value;
 
-  const amount =
-    document.getElementById("amount").value;
+    const amount =
+        document.getElementById("amount").value;
 
-  const category =
-    document.getElementById("category").value;
+    const category =
+        document.getElementById("category").value;
 
-  const { error } =
-    await supabaseClient
-      .from("expenses")
-      .insert([
-        {
-          expense_date: date,
-          amount: Number(amount),
-          category: category
+    const file =
+        document.getElementById("receipt").files[0];
+
+    let receiptUrl = null;
+
+    if (file) {
+
+        const fileName =
+            Date.now() + "_" + file.name;
+
+        const upload =
+            await supabaseClient
+                .storage
+                .from("receipts")
+                .upload(
+                    fileName,
+                    file
+                );
+
+        if (upload.error) {
+            alert(upload.error.message);
+            return;
         }
-      ]);
 
-  if (error) {
-    alert(error.message);
-    return;
-  }
+        const publicUrl =
+            supabaseClient
+                .storage
+                .from("receipts")
+                .getPublicUrl(fileName);
 
-  alert("Spesa salvata!");
+        receiptUrl =
+            publicUrl.data.publicUrl;
+    }
 
-  loadExpenses();
+    const { error } =
+        await supabaseClient
+            .from("expenses")
+            .insert([
+                {
+                    expense_date: date,
+                    amount: Number(amount),
+                    category: category,
+                    receipt_url: receiptUrl
+                }
+            ]);
+
+    if (error) {
+        alert(error.message);
+        return;
+    }
+
+    alert("Spesa salvata!");
+
+    loadExpenses();
 }
 
 async function loadExpenses() {
@@ -62,17 +97,25 @@ async function loadExpenses() {
   const container =
     document.getElementById("expenses");
 
-  container.innerHTML = "";
+  container.innerHTML += `
+<div class="card">
 
-  data.forEach(expense => {
+<b>${expense.expense_date}</b><br>
 
-    container.innerHTML += `
-      <div class="card">
-        <b>${expense.expense_date}</b><br>
-        ${expense.category}<br>
-        € ${expense.amount}
-      </div>
-    `;
+${expense.category}<br>
+
+€ ${expense.amount}<br><br>
+
+${
+expense.receipt_url
+?
+`${expense.receipt_url}`
+:
+''
+}
+
+</div>
+`;
   });
 }
 
