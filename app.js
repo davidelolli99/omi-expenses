@@ -1,3 +1,4 @@
+alert("VERSIONE 23-08-2026 ORE 16:00");
 const SUPABASE_URL =
   "https://yumndwfqjxkboaputyia.supabase.co";
 
