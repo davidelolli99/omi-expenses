@@ -12,6 +12,29 @@ const supabaseClient =
     SUPABASE_KEY
   );
 
+async function readReceipt() {
+
+  const file =
+    document.getElementById("receipt").files[0];
+
+  if (!file) {
+    alert("Seleziona prima una foto");
+    return;
+  }
+
+  alert("Lettura scontrino in corso...");
+
+  const result =
+    await Tesseract.recognize(
+      file,
+      "ita+eng"
+    );
+
+  console.log(result.data.text);
+
+  alert("OCR completato");
+}
+
 async function saveExpense() {
 
   try {

@@ -33,14 +33,21 @@
         <option>TAXI</option>
     </select>
 <label>Scontrino</label>
-    <input
-        id="receipt"
-        type="file"
-        accept="image/*">
 
-    <button onclick="saveExpense()">
-        Salva
-    </button>
+<input
+    id="receipt"
+    type="file"
+    accept="image/*">
+
+<button
+    type="button"
+    onclick="readReceipt()">
+    Leggi scontrino
+</button>
+
+<button onclick="saveExpense()">
+    Salva
+</button>
 
     <div id="expenses"></div>
 
