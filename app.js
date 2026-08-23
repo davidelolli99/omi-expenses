@@ -143,24 +143,23 @@ async function loadExpenses() {
 
     result.data.forEach(expense => {
 
-      let receiptHtml = "";
+      receiptHtml = `
+  <div style="margin-top:10px">
 
-      if (expense.receipt_url) {
+    <img
+      src="${expense.receipt_url}"
+      style="
+        width:100%;
+        max-width:250px;
+        border-radius:8px;
+        border:1px solid #ddd;
+      "
+    >
 
-        receiptHtml = `
-          <div style="margin-top:10px">
+    <br><br>
 
-            ${expense.receipt_url}
-
-            <br><br>
-
-            ${expense.receipt_url}
-              📷 Apri scontrino
-            </a>
-
-          </div>
-        `;
-      }
+    <a
+      href="${expense.
 
       container.innerHTML += `
         <div class="card">
