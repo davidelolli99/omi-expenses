@@ -1456,31 +1456,47 @@ function parseMoneyValue(
 // RICONOSCIMENTO CATEGORIA
 // ======================================================
 
-function detectExpenseCategory(
-    text
-) {
+function detectExpenseCategory(text) {
 
     const normalized =
-        normalizeText(
-            text
-        );
+        normalizeText(text);
 
 
-    // ----------------------------------------------
+    // ==================================================
     // HOTEL
-    // ----------------------------------------------
+    // ==================================================
+
+    const hotelWords = [
+        "HOTEL",
+        "ALBERGO",
+        "HOTELS",
+        "RESORT",
+        "INN",
+        "MOTEL",
+        "HOSTEL",
+        "B&B",
+        "BED AND BREAKFAST",
+        "ROOM",
+        "CAMERA",
+        "PERNOTTAMENTO",
+        "LODGING",
+        "ACCOMMODATION",
+        "RECEPTION",
+        "CHECK IN",
+        "CHECK-IN",
+        "CHECK OUT",
+        "CHECK-OUT",
+        "ROOM SERVICE",
+        "CITY TAX",
+        "TASSA DI SOGGIORNO",
+        "IMPOSTA DI SOGGIORNO"
+    ];
+
 
     if (
         containsAny(
             normalized,
-            [
-                "HOTEL",
-                "ALBERGO",
-                "BED AND BREAKFAST",
-                "B&B",
-                "ROOM",
-                "PERNOTTAMENTO"
-            ]
+            hotelWords
         )
     ) {
 
@@ -1488,27 +1504,33 @@ function detectExpenseCategory(
     }
 
 
-    // ----------------------------------------------
-    // BENZINA / CARBURANTE
-    // ----------------------------------------------
+
+    // ==================================================
+    // CARBURANTE
+    // ==================================================
+
+    const gasolineWords = [
+        "CARBURANTE",
+        "BENZINA",
+        "GASOLIO",
+        "DIESEL",
+        "FUEL",
+        "BENZINAIO",
+        "STAZIONE DI SERVIZIO",
+        "ENI",
+        "Q8",
+        "ESSO",
+        "TAMOIL",
+        "SHELL",
+        "IP",
+        "API"
+    ];
+
 
     if (
         containsAny(
             normalized,
-            [
-                "CARBURANTE",
-                "BENZINA",
-                "GASOLIO",
-                "DIESEL",
-                "FUEL",
-                "BENZINAIO",
-                "STAZIONE DI SERVIZIO",
-                "ENI",
-                "Q8",
-                "TAMOIL",
-                "ESSO",
-                "SHELL"
-            ]
+            gasolineWords
         )
     ) {
 
@@ -1516,20 +1538,26 @@ function detectExpenseCategory(
     }
 
 
-    // ----------------------------------------------
+
+    // ==================================================
     // PARCHEGGIO
-    // ----------------------------------------------
+    // ==================================================
+
+    const parkingWords = [
+        "PARCHEGGIO",
+        "PARKING",
+        "AUTORIMESSA",
+        "SOSTA",
+        "PARKIMETER",
+        "PARCOMETRO",
+        "EASYPARK"
+    ];
+
 
     if (
         containsAny(
             normalized,
-            [
-                "PARCHEGGIO",
-                "PARKING",
-                "AUTORIMESSA",
-                "SOSTA",
-                "EASYPARK"
-            ]
+            parkingWords
         )
     ) {
 
@@ -1537,20 +1565,25 @@ function detectExpenseCategory(
     }
 
 
-    // ----------------------------------------------
+
+    // ==================================================
     // TAXI
-    // ----------------------------------------------
+    // ==================================================
+
+    const taxiWords = [
+        "TAXI",
+        "UBER",
+        "FREENOW",
+        "FREE NOW",
+        "NCC",
+        "RADIOTAXI"
+    ];
+
 
     if (
         containsAny(
             normalized,
-            [
-                "TAXI",
-                "UBER",
-                "FREE NOW",
-                "FREENOW",
-                "NCC"
-            ]
+            taxiWords
         )
     ) {
 
@@ -1558,16 +1591,17 @@ function detectExpenseCategory(
     }
 
 
-    // ----------------------------------------------
-    // COLAZIONE
-    // ----------------------------------------------
+
+    // ==================================================
+    // PAROLE ESPLICITE PASTI
+    // ==================================================
 
     if (
         containsAny(
             normalized,
             [
-                "COLAZIONE",
-                "BREAKFAST"
+                "BREAKFAST",
+                "COLAZIONE"
             ]
         )
     ) {
@@ -1576,16 +1610,12 @@ function detectExpenseCategory(
     }
 
 
-    // ----------------------------------------------
-    // PRANZO
-    // ----------------------------------------------
-
     if (
         containsAny(
             normalized,
             [
-                "PRANZO",
-                "LUNCH"
+                "LUNCH",
+                "PRANZO"
             ]
         )
     ) {
@@ -1594,16 +1624,12 @@ function detectExpenseCategory(
     }
 
 
-    // ----------------------------------------------
-    // CENA
-    // ----------------------------------------------
-
     if (
         containsAny(
             normalized,
             [
-                "CENA",
-                "DINNER"
+                "DINNER",
+                "CENA"
             ]
         )
     ) {
@@ -1612,102 +1638,157 @@ function detectExpenseCategory(
     }
 
 
-    // ----------------------------------------------
-    // BAR / RISTORANTE
-    // ----------------------------------------------
+
+    // ==================================================
+    // RISTORANTE
+    // ==================================================
+
+    const restaurantWords = [
+        "RISTORANTE",
+        "RESTAURANT",
+        "TRATTORIA",
+        "OSTERIA",
+        "PIZZERIA",
+        "RISTORAZIONE",
+        "STEAKHOUSE",
+        "SUSHI",
+        "BURGER",
+        "GRILL",
+        "BISTRO",
+        "BISTROT",
+        "TAVOLA CALDA",
+        "PUB",
+        "FOOD",
+        "CUCINA",
+        "COPERTO",
+        "COPERTI",
+        "MENU",
+        "MENÙ",
+        "SERVIZIO"
+    ];
+
+
+    // ==================================================
+    // BAR / CAFFETTERIA
+    // ==================================================
+
+    const barWords = [
+        "BAR",
+        "CAFFE",
+        "CAFFÈ",
+        "CAFFETTERIA",
+        "COFFEE",
+        "CAPPUCCINO",
+        "PASTICCERIA",
+        "BAKERY",
+        "BRIOCHE",
+        "CROISSANT"
+    ];
+
 
     const isRestaurant =
         containsAny(
             normalized,
-            [
-                "RISTORANTE",
-                "TRATTORIA",
-                "PIZZERIA",
-                "OSTERIA",
-                "RESTAURANT",
-                "AUTOGRILL",
-                "RISTORAZIONE",
-                "FOOD"
-            ]
+            restaurantWords
         );
 
 
     const isBar =
         containsAny(
             normalized,
-            [
-                "CAFFE",
-                "CAFFETTERIA",
-                "CAPPUCCINO",
-                "PASTICCERIA",
-                "BAKERY",
-                "BAR"
-            ]
+            barWords
         );
 
 
-    const time =
-        extractReceiptTime(
-            text
-        );
+    const hour =
+        extractReceiptTime(text);
 
 
-    if (
-        isBar &&
-        time !== null &&
-        time < 11
-    ) {
 
-        return "BREAKFAST";
-    }
+    // ==================================================
+    // RISTORANTE + ORARIO
+    // ==================================================
 
+    if (isRestaurant) {
 
-    if (
-        isRestaurant &&
-        time !== null
-    ) {
+        if (hour !== null) {
 
-        if (
-            time >= 17
-        ) {
+            // mattina
+            if (hour < 11) {
+                return "BREAKFAST";
+            }
 
-            return "DINNER";
+            // pranzo
+            if (
+                hour >= 11 &&
+                hour < 17
+            ) {
+                return "LUNCH";
+            }
+
+            // cena
+            if (hour >= 17) {
+                return "DINNER";
+            }
         }
 
 
+        // Se è sicuramente un ristorante
+        // ma manca l'orario:
+        // proviamo a dedurre dalla data/ora attuale
+        // solo come ultima possibilità.
+
+        const currentHour =
+            new Date().getHours();
+
+
         if (
-            time >= 11
+            currentHour >= 11 &&
+            currentHour < 17
         ) {
 
             return "LUNCH";
         }
-    }
 
-
-    if (
-        isBar &&
-        time !== null
-    ) {
 
         if (
-            time >= 17
+            currentHour >= 17
         ) {
 
             return "DINNER";
         }
+    }
 
 
-        if (
-            time >= 11
-        ) {
 
-            return "LUNCH";
+    // ==================================================
+    // BAR + ORARIO
+    // ==================================================
+
+    if (isBar) {
+
+        if (hour !== null) {
+
+            if (hour < 11) {
+                return "BREAKFAST";
+            }
+
+            if (
+                hour >= 11 &&
+                hour < 17
+            ) {
+                return "LUNCH";
+            }
+
+            if (hour >= 17) {
+                return "DINNER";
+            }
         }
     }
 
 
-    // Se non siamo sicuri,
-    // NON cambiamo la categoria.
+
+    // Nessuna categoria sufficientemente sicura
 
     return null;
 }
