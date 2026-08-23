@@ -1,3 +1,4 @@
+alert("APP JS CARICATO");
 function saveExpense() {
-    alert("Step 1");
+    alert("SALVA PREMUTO");
 }
