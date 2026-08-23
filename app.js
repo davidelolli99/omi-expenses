@@ -6,10 +6,11 @@ const SUPABASE_KEY =
 
 const { createClient } = supabase;
 
-const supabaseClient = createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const supabaseClient =
+  createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 async function saveExpense() {
 
@@ -24,8 +25,11 @@ async function saveExpense() {
     const category =
       document.getElementById("category").value;
 
+    const receiptInput =
+      document.getElementById("receipt");
+
     const file =
-      document.getElementById("receipt").files[0];
+      receiptInput.files[0];
 
     if (!date) {
       alert("Inserisci la data");
@@ -42,7 +46,7 @@ async function saveExpense() {
     if (file) {
 
       const fileName =
-        `${Date.now()}_${file.name}`;
+        Date.now() + "_" + file.name;
 
       const uploadResult =
         await supabaseClient
@@ -57,12 +61,10 @@ async function saveExpense() {
           );
 
       if (uploadResult.error) {
-
         alert(
           "Errore upload: " +
           uploadResult.error.message
         );
-
         return;
       }
 
@@ -89,12 +91,10 @@ async function saveExpense() {
         ]);
 
     if (insertResult.error) {
-
       alert(
         "Errore database: " +
         insertResult.error.message
       );
-
       return;
     }
 
@@ -113,6 +113,7 @@ async function saveExpense() {
       "Errore JavaScript: " +
       error.message
     );
+
   }
 }
 
@@ -143,23 +144,32 @@ async function loadExpenses() {
 
     result.data.forEach(expense => {
 
-      receiptHtml = `
-  <div style="margin-top:10px">
+      let imageHtml = "";
 
-    <img
-      src="${expense.receipt_url}"
-      style="
-        width:100%;
-        max-width:250px;
-        border-radius:8px;
-        border:1px solid #ddd;
-      "
-    >
+      if (expense.receipt_url) {
 
-    <br><br>
+        imageHtml = `
+          <div style="margin-top:10px;">
 
-    <a
-      href="${expense.
+            ${expense.receipt_url}="
+                width:100%;
+                max-width:250px;
+                border-radius:8px;
+                border:1px solid #ddd;
+              "
+            >
+
+            <br><br>
+
+            _url}"
+              target="_blank"
+            >
+              📷 Apri scontrino
+            </a>
+
+          </div>
+        `;
+      }
 
       container.innerHTML += `
         <div class="card">
@@ -174,7 +184,7 @@ async function loadExpenses() {
 
           € ${expense.amount}
 
-          ${receiptHtml}
+          ${imageHtml}
 
         </div>
       `;
@@ -188,6 +198,7 @@ async function loadExpenses() {
       "Errore caricamento storico: " +
       error.message
     );
+
   }
 }
 
