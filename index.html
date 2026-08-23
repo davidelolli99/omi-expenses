@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OMI Expenses</title>
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -12,18 +12,18 @@
 
     <h1>OMI Expenses</h1>
 
-<label>Data</label>
-<input id="date" type="date">
+    <label>Data</label>
+    <input id="date" type="date">
 
-<label>Importo (€)</label>
-<input
-    id="amount"
-    type="number"
-    placeholder="Importo (€)"
-    step="0.01">
+    <label>Importo (€)</label>
+    <input
+        id="amount"
+        type="number"
+        placeholder="Importo (€)"
+        step="0.01">
 
-<label>Categoria</label>
-<select id="category">  
+    <label>Categoria</label>
+    <select id="category">
         <option>HOTEL</option>
         <option>BREAKFAST</option>
         <option>LUNCH</option>
@@ -32,29 +32,32 @@
         <option>GASOLINE</option>
         <option>TAXI</option>
     </select>
-<label>Scontrino</label>
 
-<input
-    id="receipt"
-    type="file"
-    accept="image/*">
+    <label>Scontrino</label>
 
-<button
-    type="button"
-    onclick="readReceipt()">
-    Leggi scontrino
-</button>
+    <input
+        id="receipt"
+        type="file"
+        accept="image/*">
 
-<button onclick="saveExpense()">
-    Salva
-</button>
+    <button
+        type="button"
+        onclick="readReceipt()">
+        Leggi scontrino
+    </button>
+
+    <button
+        type="button"
+        onclick="saveExpense()">
+        Salva
+    </button>
 
     <div id="expenses"></div>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.>
+upabase-js@2"></script>
+.js@5/dist/tesseract.min.js"></script>
 <script src="app.js"></script>
 
 </body>

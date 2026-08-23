@@ -22,17 +22,51 @@ async function readReceipt() {
     return;
   }
 
-  alert("Lettura scontrino in corso...");
+  try {
 
-  const result =
-    await Tesseract.recognize(
-      file,
-      "ita+eng"
+    alert("Lettura scontrino in corso...");
+
+    const result =
+      await Tesseract.recognize(
+        file,
+        "ita+eng"
+      );
+
+    const text =
+      result.data.text;
+
+    console.log(text);
+
+    const amounts =
+      text.match(/\d+[.,]\d{2}/g);
+
+    if (amounts && amounts.length > 0) {
+
+      const biggestAmount =
+        amounts
+          .map(x =>
+            parseFloat(
+              x.replace(",", ".")
+            )
+          )
+          .sort((a, b) => b - a)[0];
+
+      document.getElementById("amount").value =
+        biggestAmount;
+    }
+
+    alert("OCR completato");
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      "Errore OCR: " +
+      error.message
     );
 
-  console.log(result.data.text);
-
-  alert("OCR completato");
+  }
 }
 
 async function saveExpense() {
@@ -119,118 +153,4 @@ async function saveExpense() {
 
       alert(
         "Errore database: " +
-        insertResult.error.message
-      );
-
-      return;
-    }
-
-    alert("Spesa salvata!");
-
-    document.getElementById("amount").value = "";
-    document.getElementById("receipt").value = "";
-
-    loadExpenses();
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert(
-      "Errore JavaScript: " +
-      error.message
-    );
-  }
-}
-
-async function loadExpenses() {
-
-  try {
-
-    const result =
-      await supabaseClient
-        .from("expenses")
-        .select("*")
-        .order(
-          "expense_date",
-          {
-            ascending: false
-          }
-        );
-
-    if (result.error) {
-
-      console.error(result.error);
-      return;
-    }
-
-    const container =
-      document.getElementById("expenses");
-
-    container.innerHTML = "";
-
-    result.data.forEach(expense => {
-
-      let receiptHtml = "";
-
-if (expense.receipt_url) {
-
-  receiptHtml = `
-  <br><br>
-
-  <img
-    src="${expense.receipt_url}"
-    style="
-      width:100%;
-      max-width:250px;
-      border-radius:8px;
-      border:1px solid #ddd;
-    "
-  >
-
-  <br><br>
-
-  <a
-    href="${expense.receipt_url}"
-    target="_blank"
-  >
-    📷 Apri scontrino
-  
-          </a>
-        `;
-      }
-
-      container.innerHTML += `
-        <div class="card">
-
-          <b>${expense.expense_date}</b>
-
-          <br>
-
-          ${expense.category}
-
-          <br>
-
-          € ${expense.amount}
-
-          ${receiptHtml}
-
-        </div>
-      `;
-    });
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert(
-      "Errore caricamento storico: " +
-      error.message
-    );
-  }
-}
-
-loadExpenses();
-
-document.getElementById("date").value =
-  new Date().toISOString().split("T")[0];
+        insertResult.error.
