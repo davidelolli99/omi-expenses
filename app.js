@@ -208,5 +208,6 @@ if (expense.receipt_url) {
 }
 
 loadExpenses();
-document.getElementB*Id("date").value =
-  new Date().to*SOString().split("T")[0];
+
+document.getElementById("date").value =
+  new Date().toISOString().split("T")[0];
