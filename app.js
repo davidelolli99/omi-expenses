@@ -14,6 +14,21 @@ const supabaseClient =
 
 async function saveExpense() {
 
+    try {
+
+    // tutto il tuo codice attuale
+
+  } catch(err) {
+
+    console.error(err);
+
+    alert(
+      "Errore: " + err.message
+    );
+
+  }
+}
+
     const date =
         document.getElementById("date").value;
 
@@ -97,25 +112,28 @@ async function loadExpenses() {
   const container =
     document.getElementById("expenses");
 
-  container.innerHTML += `
-<div class="card">
+  container.innerHTML = "";
 
-<b>${expense.expense_date}</b><br>
+  data.forEach(expense => {
 
-${expense.category}<br>
+    container.innerHTML += `
+      <div class="card">
 
-€ ${expense.amount}<br><br>
+        <b>${expense.expense_date}</b><br>
 
-${
-expense.receipt_url
-?
-`${expense.receipt_url}`
-:
-''
-}
+        ${expense.category}<br>
 
-</div>
-`;
+        € ${expense.amount}<br><br>
+
+        ${
+          expense.receipt_url
+            ? `${expense.receipt_url}📷 Scontrino</a>`
+            : ""
+        }
+
+      </div>
+    `;
+
   });
 }
 
