@@ -1,38 +1,41 @@
 body{
-    font-family: Arial;
-    background:#f5f5f5;
+    font-family: Arial, sans-serif;
+    background:#efefef;
+    margin:0;
+    padding:20px;
 }
 
 .container{
-    max-width:500px;
+    max-width:700px;
     margin:auto;
-    padding:20px;
 }
 
 input,
 select,
 button{
     width:100%;
-    margin-top:10px;
     padding:12px;
+    margin-top:10px;
+    margin-bottom:15px;
+    box-sizing:border-box;
 }
 
-.card {
-
-    background: white;
-    padding: 15px;
-    margin-top: 15px;
-
-    border-radius: 10px;
-
-    box-shadow:
-      0 2px 6px rgba(0,0,0,0.1);
+button{
+    cursor:pointer;
 }
 
-h1{
-    text-align:center;
+.card{
+    background:white;
+    padding:15px;
+    margin-top:15px;
+    border-radius:10px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
-body{
-    background:#efefef;
+.receipt-image{
+    width:100%;
+    max-width:250px;
+    border-radius:8px;
+    border:1px solid #ddd;
+    margin-top:10px;
 }

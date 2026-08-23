@@ -25,11 +25,8 @@ async function saveExpense() {
     const category =
       document.getElementById("category").value;
 
-    const receiptInput =
-      document.getElementById("receipt");
-
     const file =
-      receiptInput.files[0];
+      document.getElementById("receipt").files[0];
 
     if (!date) {
       alert("Inserisci la data");
@@ -61,24 +58,21 @@ async function saveExpense() {
           );
 
       if (uploadResult.error) {
-        alert(
-          "Errore upload: " +
-          uploadResult.error.message
-        );
+        alert(uploadResult.error.message);
         return;
       }
 
-      const publicUrlResult =
+      const publicUrl =
         supabaseClient
           .storage
           .from("receipts")
           .getPublicUrl(fileName);
 
       receiptUrl =
-        publicUrlResult.data.publicUrl;
+        publicUrl.data.publicUrl;
     }
 
-    const insertResult =
+    const { error } =
       await supabaseClient
         .from("expenses")
         .insert([
@@ -90,11 +84,8 @@ async function saveExpense() {
           }
         ]);
 
-    if (insertResult.error) {
-      alert(
-        "Errore database: " +
-        insertResult.error.message
-      );
+    if (error) {
+      alert(error.message);
       return;
     }
 
@@ -105,15 +96,15 @@ async function saveExpense() {
 
     loadExpenses();
 
-  } catch (error) {
+  }
+  catch(error) {
 
     console.error(error);
 
     alert(
-      "Errore JavaScript: " +
+      "Errore: " +
       error.message
     );
-
   }
 }
 
@@ -121,7 +112,7 @@ async function loadExpenses() {
 
   try {
 
-    const result =
+    const { data, error } =
       await supabaseClient
         .from("expenses")
         .select("*")
@@ -132,8 +123,8 @@ async function loadExpenses() {
           }
         );
 
-    if (result.error) {
-      console.error(result.error);
+    if (error) {
+      console.error(error);
       return;
     }
 
@@ -142,29 +133,23 @@ async function loadExpenses() {
 
     container.innerHTML = "";
 
-    result.data.forEach(expense => {
+    data.forEach(expense => {
 
-      let imageHtml = `
-  <div style="margin-top:10px;">
+      let imageHtml = "";
 
-    expense.receipt_url}"
-      style="
-        width:100%;
-        max-width:250px;
-        border-radius:8px;
-        border:1px solid #ddd;
-      "
-    />
+      if (expense.receipt_url) {
 
-    <br><br>
+        imageHtml = `
+          ${expense.receipt_url}
 
-    ${expense.receipt_url} target="_blank"
-    >
-      📷 Apri scontrino
-    </a>
+          <br>
 
-  </div>
-`;
+          ipt_url}"
+            target="_blank"
+          >
+            📷 Apri scontrino
+          </a>
+        `;
       }
 
       container.innerHTML += `
@@ -180,13 +165,16 @@ async function loadExpenses() {
 
           € ${expense.amount}
 
+          <br>
+
           ${imageHtml}
 
         </div>
       `;
     });
 
-  } catch (error) {
+  }
+  catch(error) {
 
     console.error(error);
 
@@ -194,11 +182,12 @@ async function loadExpenses() {
       "Errore caricamento storico: " +
       error.message
     );
-
   }
 }
 
 loadExpenses();
 
 document.getElementById("date").value =
-  new Date().toISOString().split("T")[0];
+  new Date()
+    .toISOString()
+    .split("T")[0];
