@@ -10,7 +10,22 @@ const supabaseClient =
     SUPABASE_KEY
   );
 
-function saveExpense() {
-    alert("Entrato nella funzione");
-    console.log("Supabase:", supabaseClient);
+async function saveExpense() {
+
+    try {
+
+        const result =
+            await supabaseClient
+                .from("expenses")
+                .select("*");
+
+        console.log(result);
+
+        alert("Test completato");
+
+    } catch(err) {
+
+        alert(err.message);
+
+    }
 }
