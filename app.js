@@ -155,11 +155,20 @@ async function loadExpenses() {
         receiptHtml = `
           <br><br>
 
-          ${expense.receipt_url}
+          expense.receipt_url}"
+            style="
+              width:100%;
+              max-width:250px;
+              border-radius:8px;
+              border:1px solid #ddd;
+            "
+          >
 
           <br><br>
 
-          ${expense.receipt_url}
+          expense.receipt_url}"
+            target="_blank"
+          >
             📷 Apri scontrino
           </a>
         `;
