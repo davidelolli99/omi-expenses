@@ -136,14 +136,13 @@ async function loadExpenses() {
 
       if (expense.receipt_url) {
 
-        imageHtml =
-          '<br>' +
-          '' + expense.receipt_url + '' +
-          '<br><br>' +
-          '' + expense.receipt_url + '' +
-          '📷 Apri scontrino' +
-          '</a>';
-      }
+  imageHtml =
+    ' + '" class="receipt-image">' +
+    '<br><br>' +
+    '' + expense.receipt_url + '' +
+    '📷 Apri scontrino' +
+    '</a>';
+}
 
       container.innerHTML +=
         '<div class="card">' +
