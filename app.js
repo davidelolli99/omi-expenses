@@ -153,24 +153,26 @@ async function loadExpenses() {
 if (expense.receipt_url) {
 
   receiptHtml = `
-    <br><br>
+  <br><br>
 
-    <img
-      src="${expense.receipt_url}"
-      style="
-        width:100%;
-        max-width:250px;
-        border-radius:8px;
-        border:1px solid #ddd;
-      "
-    >
+  <img
+    src="${expense.receipt_url}"
+    style="
+      width:100%;
+      max-width:250px;
+      border-radius:8px;
+      border:1px solid #ddd;
+    "
+  >
 
-    
+  <br><br>
 
-          <br><br>
-
-          ${expense.receipt_url}">
-            📷 Apri scontrino
+  <a
+    href="${expense.receipt_url}"
+    target="_blank"
+  >
+    📷 Apri scontrino
+  
           </a>
         `;
       }
