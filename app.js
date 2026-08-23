@@ -30,7 +30,7 @@ const supabaseClient =
 // CONFIGURAZIONE
 // ======================================================
 
-const RECEIPTS_BUCKET = "receipts";
+const RECEIPTS_BUCKET = "receipts-private";
 
 const MAX_RECEIPT_SIZE =
     6 * 1024 * 1024;
