@@ -149,21 +149,20 @@ async function loadExpenses() {
 
       let receiptHtml = "";
 
-      if(expense.receipt_url) {
+      if (expense.receipt_url) {
 
-  receiptHtml = `
-    <br><br>
+        receiptHtml = `
+          <br><br>
 
-    ${expense.receipt_url}
+          ${expense.receipt_url}
 
-    <br><br>
+          <br><br>
 
-    ${expense.receipt_url}
-      📷 Apri scontrino
-    </a>
-  `;
-}
-``
+          ${expense.receipt_url}
+            📷 Apri scontrino
+          </a>
+        `;
+      }
 
       container.innerHTML += `
         <div class="card">
