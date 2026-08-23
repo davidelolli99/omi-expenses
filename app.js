@@ -151,26 +151,26 @@ async function loadExpenses() {
 
       if (expense.receipt_url) {
 
-        receiptHtml = `
-          <br><br>
+  receiptHtml = `
+    <br><br>
 
-          ${expense.receipt_url} style="
-              width:100%;
-              max-width:250px;
-              border-radius:8px;
-              border:1px solid #ddd;
-            "
-          >
+    ipt_url}"
+      style="
+        width:100%;
+        max-width:250px;
+        border-radius:8px;
+        border:1px solid #ddd;
+      "
+    >
 
-          <br><br>
+    <br><br>
 
-          expense.receipt_url}"
-            target="_blank"
-          >
-            📷 Apri scontrino
-          </a>
-        `;
-      }
+    ${expense.receipt_url}
+      📷 Apri scontrino
+    </a>
+  `;
+}
+``
 
       container.innerHTML += `
         <div class="card">
