@@ -49,41 +49,11 @@
 
 
         <!-- CATEGORIA -->
-        <label for="category">
-            Categoria
-        </label>
-
-        <select id="category">
-
-            <option value="HOTEL">
-                HOTEL
-            </option>
-
-            <option value="BREAKFAST">
-                BREAKFAST
-            </option>
-
-            <option value="LUNCH">
-                LUNCH
-            </option>
-
-            <option value="DINNER">
-                DINNER
-            </option>
-
-            <option value="PARKING">
-                PARKING
-            </option>
-
-            <option value="GASOLINE">
-                GASOLINE
-            </option>
-
-            <option value="TAXI">
-                TAXI
-            </option>
-
-        </select>
+        <input
+    id="category"
+    type="hidden"
+    value=""
+>
 
 
         <!-- SCONTRINO -->
@@ -115,6 +85,14 @@
             role="status"
             aria-live="polite"
         ></div>
+
+        <div
+    id="detectedCategory"
+    style="
+        margin-top:10px;
+        font-weight:600;
+    "
+></div>
 
 
         <!-- TESTO OCR PER CONTROLLO -->

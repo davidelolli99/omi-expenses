@@ -73,6 +73,16 @@ async function saveExpense() {
             document
                 .getElementById("category")
                 .value;
+          if (!category) {
+
+    alert(
+        "Non sono riuscito a riconoscere automaticamente " +
+        "la categoria dello scontrino.\n\n" +
+        "Riprova a leggere lo scontrino."
+    );
+
+    return;
+}
 
 
         const fileInput =

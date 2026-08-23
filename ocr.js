@@ -227,6 +227,26 @@ async function readReceipt() {
                 detectedCategory;
         }
 
+        const categoryDisplay =
+    document.getElementById(
+        "detectedCategory"
+    );
+
+if (categoryDisplay) {
+
+    if (detectedCategory) {
+
+        categoryDisplay.textContent =
+            "Riconosciuto: " +
+            detectedCategory;
+
+    } else {
+
+        categoryDisplay.textContent =
+            "Categoria non riconosciuta";
+    }
+}
+
 
         // ------------------------------------------
         // RISULTATO
@@ -1990,4 +2010,15 @@ function resetOcrUi() {
         text.textContent =
             "";
     }
+
+    const categoryDisplay =
+    document.getElementById(
+        "detectedCategory"
+    );
+
+if (categoryDisplay) {
+
+    categoryDisplay.textContent =
+        "";
+}
 }
