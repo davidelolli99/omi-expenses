@@ -1,3 +1,9 @@
+alert(typeof Tesseract);
+
+async function readReceipt() {
+    alert("OCR AVVIATO");
+}
+
 async function readReceipt() {
 
     const file =
