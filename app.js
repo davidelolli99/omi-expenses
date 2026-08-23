@@ -1,3 +1,4 @@
+alert("app.js caricato");
 const SUPABASE_URL = "https://yumndwfqjxkboaputyia.supabase.co";
 sb_publishable_9dhDmCkwaK9a5LkRk-jCPQ_o7Dxn0bW
 
