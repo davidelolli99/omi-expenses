@@ -148,7 +148,28 @@ async function loadExpenses() {
 
     result.data.forEach(expense => {
 
-      
+      let receiptHtml = "";
+
+      if (expense.receipt_url) {
+
+        receiptHtml = `
+          <br><br>
+
+          ${expense.receipt_url}="
+              width:100%;
+              max-width:250px;
+              border-radius:8px;
+              border:1px solid #ddd;
+            "
+          >
+
+          <br><br>
+
+          ${expense.receipt_url}">
+            📷 Apri scontrino
+          </a>
+        `;
+      }
 
       container.innerHTML += `
         <div class="card">
@@ -172,6 +193,11 @@ async function loadExpenses() {
   } catch (error) {
 
     console.error(error);
+
+    alert(
+      "Errore caricamento storico: " +
+      error.message
+    );
   }
 }
 
