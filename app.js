@@ -150,18 +150,22 @@ async function loadExpenses() {
 
       let receiptHtml = "";
 
-      if (expense.receipt_url) {
+if (expense.receipt_url) {
 
-        receiptHtml = `
-          <br><br>
+  receiptHtml = `
+    <br><br>
 
-          ${expense.receipt_url}="
-              width:100%;
-              max-width:250px;
-              border-radius:8px;
-              border:1px solid #ddd;
-            "
-          >
+    <img
+      src="${expense.receipt_url}"
+      style="
+        width:100%;
+        max-width:250px;
+        border-radius:8px;
+        border:1px solid #ddd;
+      "
+    >
+
+    
 
           <br><br>
 
