@@ -1,40 +1,39 @@
-let expenses = [];
+const SUPABASE_URL = "https://yumndwfqjxkboaputyia.supabase.co";
+sb_publishable_9dhDmCkwaK9a5LkRk-jCPQ_o7Dxn0bW
 
-function saveExpense() {
+const supabaseClient =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
-    const date =
-        document.getElementById("date").value;
+async function saveExpense() {
 
-    const amount =
-        document.getElementById("amount").value;
+  const date =
+    document.getElementById("date").value;
 
-    const category =
-        document.getElementById("category").value;
+  const amount =
+    document.getElementById("amount").value;
 
-    expenses.push({
-        date,
-        amount,
-        category
-    });
+  const category =
+    document.getElementById("category").value;
 
-    render();
+  const { error } =
+    await supabaseClient
+      .from("expenses")
+      .insert([
+        {
+          expense_date: date,
+          amount: amount,
+          category: category
+        }
+      ]);
+
+  if(error){
+    alert("Errore: " + error.message);
+    return;
+  }
+
+  alert("Spesa salvata!");
 }
-
-function render() {
-
-    const container =
-        document.getElementById("expenses");
-
-    container.innerHTML = "";
-
-    expenses.forEach(expense => {
-
-        container.innerHTML += `
-            <div class="card">
-                <b>${expense.date}</b><br>
-                ${expense.category}<br>
-                € ${expense.amount}
-            </div>
-        `;
-    });
-}
+``
