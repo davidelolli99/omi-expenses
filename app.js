@@ -1,31 +1,17 @@
-const SUPABASE_URL =
-  "https://yumndwfqjxkboaputyia.supabase.co";
+function saveExpense() {
 
-const SUPABASE_KEY =
-  "LA_TUA_PUBLISHABLE_KEY";
+    const date =
+        document.getElementById("date").value;
 
-const supabaseClient =
-  supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+    const amount =
+        document.getElementById("amount").value;
 
-async function saveExpense() {
+    const category =
+        document.getElementById("category").value;
 
-    try {
-
-        const result =
-            await supabaseClient
-                .from("expenses")
-                .select("*");
-
-        console.log(result);
-
-        alert("Test completato");
-
-    } catch(err) {
-
-        alert(err.message);
-
-    }
+    alert(
+        "Data: " + date +
+        "\nImporto: " + amount +
+        "\nCategoria: " + category
+    );
 }
