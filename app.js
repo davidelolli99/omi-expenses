@@ -150,7 +150,7 @@ async function loadExpenses() {
 
       let receiptHtml = "";
 
-      if (expense.receipt_url) {
+      if(expense.receipt_url) {
 
         receiptHtml = `
           <br><br>
