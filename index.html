@@ -3,14 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OMI Expenses</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -20,23 +14,10 @@
 
         <h1>OMI Expenses</h1>
 
-        <!-- DATA -->
-        <label for="date">
-            Data
-        </label>
+        <label for="date">Data</label>
+        <input id="date" type="date" required>
 
-        <input
-            id="date"
-            type="date"
-            required
-        >
-
-
-        <!-- IMPORTO -->
-        <label for="amount">
-            Importo (€)
-        </label>
-
+        <label for="amount">Importo (€)</label>
         <input
             id="amount"
             type="number"
@@ -47,20 +28,10 @@
             required
         >
 
+        <!-- La categoria viene compilata automaticamente dall'OCR -->
+        <input id="category" type="hidden" value="">
 
-        <!-- CATEGORIA -->
-        <input
-    id="category"
-    type="hidden"
-    value=""
->
-
-
-        <!-- SCONTRINO -->
-        <label for="receipt">
-            Scontrino
-        </label>
-
+        <label for="receipt">Scontrino</label>
         <input
             id="receipt"
             type="file"
@@ -68,8 +39,6 @@
             capture="environment"
         >
 
-
-        <!-- OCR -->
         <button
             id="ocrButton"
             type="button"
@@ -78,8 +47,6 @@
             📷 Leggi scontrino
         </button>
 
-
-        <!-- STATO OCR -->
         <div
             id="ocrStatus"
             role="status"
@@ -87,27 +54,15 @@
         ></div>
 
         <div
-    id="detectedCategory"
-    style="
-        margin-top:10px;
-        font-weight:600;
-    "
-></div>
+            id="detectedCategory"
+            style="margin-top:10px; font-weight:600;"
+        ></div>
 
-
-        <!-- TESTO OCR PER CONTROLLO -->
         <details id="ocrDetails" hidden>
-
-            <summary>
-                Testo riconosciuto
-            </summary>
-
+            <summary>Testo riconosciuto</summary>
             <pre id="ocrText"></pre>
-
         </details>
 
-
-        <!-- SALVATAGGIO -->
         <button
             id="saveButton"
             type="button"
@@ -116,34 +71,50 @@
             💾 Salva spesa
         </button>
 
+        <hr>
+
+        <h2>Storico spese</h2>
+        <div id="expenses"></div>
 
         <hr>
 
-        <h2>
-            Storico spese
-        </h2>
+        <section id="excelExportSection">
+            <h2>Report mensile OMI</h2>
 
-        <div id="expenses"></div>
+            <label for="excelMonth">Mese da esportare</label>
+            <input id="excelMonth" type="month">
+
+            <button
+                id="excelButton"
+                type="button"
+                onclick="generateMonthlyExcel()"
+            >
+                📊 Genera Excel del mese
+            </button>
+
+            <div
+                id="excelStatus"
+                role="status"
+                aria-live="polite"
+                style="margin-top:10px;"
+            ></div>
+        </section>
 
     </main>
 
-
     <!-- SUPABASE -->
-    <script
-        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-    </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <!-- TESSERACT OCR -->
-    <script
-        src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
+    <!-- JSZIP: modifica la copia del template XLSX senza ricostruirlo -->
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
-    <!-- NOSTRI SCRIPT -->
+    <!-- SCRIPT APP -->
     <script src="ocr.js"></script>
-
     <script src="app.js"></script>
+    <script src="excel.js"></script>
 
 </body>
 
