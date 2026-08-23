@@ -57,10 +57,12 @@ async function saveExpense() {
           );
 
       if (uploadResult.error) {
+
         alert(
           "Errore upload: " +
           uploadResult.error.message
         );
+
         return;
       }
 
@@ -87,10 +89,12 @@ async function saveExpense() {
         ]);
 
     if (insertResult.error) {
+
       alert(
         "Errore database: " +
         insertResult.error.message
       );
+
       return;
     }
 
@@ -112,4 +116,83 @@ async function saveExpense() {
   }
 }
 
-async function
+async function loadExpenses() {
+
+  try {
+
+    const result =
+      await supabaseClient
+        .from("expenses")
+        .select("*")
+        .order(
+          "expense_date",
+          {
+            ascending: false
+          }
+        );
+
+    if (result.error) {
+      console.error(result.error);
+      return;
+    }
+
+    const container =
+      document.getElementById("expenses");
+
+    container.innerHTML = "";
+
+    result.data.forEach(expense => {
+
+      let receiptHtml = "";
+
+      if (expense.receipt_url) {
+
+        receiptHtml = `
+          <div style="margin-top:10px">
+
+            ${expense.receipt_url}
+
+            <br><br>
+
+            ${expense.receipt_url}
+              📷 Apri scontrino
+            </a>
+
+          </div>
+        `;
+      }
+
+      container.innerHTML += `
+        <div class="card">
+
+          <b>${expense.expense_date}</b>
+
+          <br>
+
+          ${expense.category}
+
+          <br>
+
+          € ${expense.amount}
+
+          ${receiptHtml}
+
+        </div>
+      `;
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      "Errore caricamento storico: " +
+      error.message
+    );
+  }
+}
+
+loadExpenses();
+
+document.getElementById("date").value =
+  new Date().toISOString().split("T")[0];
