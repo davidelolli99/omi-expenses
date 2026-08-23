@@ -148,18 +148,7 @@ async function loadExpenses() {
 
     result.data.forEach(expense => {
 
-      let receiptHtml = "";
-
-      if (expense.receipt_url) {
-
-        receiptHtml = `
-          <br>
-          }"
-             target="_blank">
-             📷 Scontrino
-          </a>
-        `;
-      }
+      
 
       container.innerHTML += `
         <div class="card">
