@@ -154,14 +154,7 @@ async function loadExpenses() {
   receiptHtml = `
     <br><br>
 
-    ipt_url}"
-      style="
-        width:100%;
-        max-width:250px;
-        border-radius:8px;
-        border:1px solid #ddd;
-      "
-    >
+    ${expense.receipt_url}
 
     <br><br>
 
