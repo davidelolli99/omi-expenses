@@ -25,8 +25,11 @@ async function saveExpense() {
     const category =
       document.getElementById("category").value;
 
+    const fileInput =
+      document.getElementById("receipt");
+
     const file =
-      document.getElementById("receipt").files[0];
+      fileInput.files[0];
 
     if (!date) {
       alert("Inserisci la data");
@@ -43,7 +46,7 @@ async function saveExpense() {
     if (file) {
 
       const fileName =
-        Date.now() + "_" + file.name;
+        `${Date.now()}_${file.name}`;
 
       const uploadResult =
         await supabaseClient
@@ -58,21 +61,26 @@ async function saveExpense() {
           );
 
       if (uploadResult.error) {
-        alert(uploadResult.error.message);
+
+        alert(
+          "Errore upload: " +
+          uploadResult.error.message
+        );
+
         return;
       }
 
-      const publicUrl =
+      const publicUrlResult =
         supabaseClient
           .storage
           .from("receipts")
           .getPublicUrl(fileName);
 
       receiptUrl =
-        publicUrl.data.publicUrl;
+        publicUrlResult.data.publicUrl;
     }
 
-    const { error } =
+    const insertResult =
       await supabaseClient
         .from("expenses")
         .insert([
@@ -84,8 +92,13 @@ async function saveExpense() {
           }
         ]);
 
-    if (error) {
-      alert(error.message);
+    if (insertResult.error) {
+
+      alert(
+        "Errore database: " +
+        insertResult.error.message
+      );
+
       return;
     }
 
@@ -96,13 +109,12 @@ async function saveExpense() {
 
     loadExpenses();
 
-  }
-  catch(error) {
+  } catch (error) {
 
     console.error(error);
 
     alert(
-      "Errore: " +
+      "Errore JavaScript: " +
       error.message
     );
   }
@@ -112,16 +124,20 @@ async function loadExpenses() {
 
   try {
 
-    const { data, error } =
+    const result =
       await supabaseClient
         .from("expenses")
         .select("*")
-        .order("expense_date", {
-          ascending: false
-        });
+        .order(
+          "expense_date",
+          {
+            ascending: false
+          }
+        );
 
-    if (error) {
-      console.error(error);
+    if (result.error) {
+
+      console.error(result.error);
       return;
     }
 
@@ -130,31 +146,57 @@ async function loadExpenses() {
 
     container.innerHTML = "";
 
-    data.forEach(expense => {
+    result.data.forEach(expense => {
 
-      let imageHtml = "";
+      let receiptHtml = "";
 
-      if (expense.receipt_url) {
+if (expense.receipt_url) {
 
-  imageHtml =
-    ' + '" class="receipt-image">' +
-    '<br><br>' +
-    '' + expense.receipt_url + '' +
-    '📷 Apri scontrino' +
-    '</a>';
-}
+  receiptHtml = `
+  <br><br>
 
-      container.innerHTML +=
-        '<div class="card">' +
-        '<b>' + expense.expense_date + '</b><br>' +
-        expense.category + '<br>' +
-        '€ ' + expense.amount + '<br>' +
-        imageHtml +
-        '</div>';
+  <img
+    src="${expense.receipt_url}"
+    style="
+      width:100%;
+      max-width:250px;
+      border-radius:8px;
+      border:1px solid #ddd;
+    "
+  >
 
+  <br><br>
+
+  <a
+    href="${expense.receipt_url}"
+    target="_blank"
+  >
+    📷 Apri scontrino
+  
+          </a>
+        `;
+      }
+
+      container.innerHTML += `
+        <div class="card">
+
+          <b>${expense.expense_date}</b>
+
+          <br>
+
+          ${expense.category}
+
+          <br>
+
+          € ${expense.amount}
+
+          ${receiptHtml}
+
+        </div>
+      `;
     });
 
-  } catch(error) {
+  } catch (error) {
 
     console.error(error);
 
@@ -168,6 +210,4 @@ async function loadExpenses() {
 loadExpenses();
 
 document.getElementById("date").value =
-  new Date()
-    .toISOString()
-    .split("T")[0];
+  new Date().toISOString().split("T")[0];
