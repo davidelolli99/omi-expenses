@@ -1,31 +1,25 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OMI Expenses</title>
-
-    style.css
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <div class="container">
 
     <h1>OMI Expenses</h1>
 
-    <label>Data</label>
     <input id="date" type="date">
 
-    <label>Importo (€)</label>
     <input
         id="amount"
         type="number"
         placeholder="Importo (€)"
         step="0.01">
 
-    <label>Categoria</label>
     <select id="category">
         <option>HOTEL</option>
         <option>BREAKFAST</option>
@@ -36,22 +30,12 @@
         <option>TAXI</option>
     </select>
 
-    <label>Scontrino</label>
-
     <input
         id="receipt"
         type="file"
         accept="image/*">
 
-    <button
-        type="button"
-        onclick="readReceipt()">
-        Leggi scontrino
-    </button>
-
-    <button
-        type="button"
-        onclick="saveExpense()">
+    <button onclick="saveExpense()">
         Salva
     </button>
 
@@ -59,9 +43,8 @@
 
 </div>
 
-https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2
-/tesseract.js@5/dist/tesseract.min.js"></script>
-"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
