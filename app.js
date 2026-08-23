@@ -1,4 +1,3 @@
-alert("VERSIONE 23-08-2026 ORE 16:00");
 const SUPABASE_URL =
   "https://yumndwfqjxkboaputyia.supabase.co";
 
@@ -7,11 +6,10 @@ const SUPABASE_KEY =
 
 const { createClient } = supabase;
 
-const supabaseClient =
-  createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+const supabaseClient = createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 async function saveExpense() {
 
@@ -26,11 +24,8 @@ async function saveExpense() {
     const category =
       document.getElementById("category").value;
 
-    const fileInput =
-      document.getElementById("receipt");
-
     const file =
-      fileInput.files[0];
+      document.getElementById("receipt").files[0];
 
     if (!date) {
       alert("Inserisci la data");
@@ -62,12 +57,10 @@ async function saveExpense() {
           );
 
       if (uploadResult.error) {
-
         alert(
           "Errore upload: " +
           uploadResult.error.message
         );
-
         return;
       }
 
@@ -94,12 +87,10 @@ async function saveExpense() {
         ]);
 
     if (insertResult.error) {
-
       alert(
         "Errore database: " +
         insertResult.error.message
       );
-
       return;
     }
 
@@ -121,90 +112,4 @@ async function saveExpense() {
   }
 }
 
-async function loadExpenses() {
-
-  try {
-
-    const result =
-      await supabaseClient
-        .from("expenses")
-        .select("*")
-        .order(
-          "expense_date",
-          {
-            ascending: false
-          }
-        );
-
-    if (result.error) {
-      console.error(result.error);
-      return;
-    }
-
-    const container =
-      document.getElementById("expenses");
-
-    container.innerHTML = "";
-
-    result.data.forEach(expense => {
-
-      let receiptHtml = "";
-
-      if(expense.receipt_url) {
-
-        receiptHtml = `
-          <br><br>
-
-          expense.receipt_url}"
-            style="
-              width:100%;
-              max-width:250px;
-              border-radius:8px;
-              border:1px solid #ddd;
-            "
-          >
-
-          <br><br>
-
-          expense.receipt_url}"
-            target="_blank"
-          >
-            📷 Apri scontrino
-          </a>
-        `;
-      }
-
-      container.innerHTML += `
-        <div class="card">
-
-          <b>${expense.expense_date}</b>
-
-          <br>
-
-          ${expense.category}
-
-          <br>
-
-          € ${expense.amount}
-
-          ${receiptHtml}
-
-        </div>
-      `;
-    });
-
-  } catch (error) {
-
-    console.error(error);
-
-    alert(
-      "Errore caricamento storico: " +
-      error.message
-    );
-  }
-}
-
-loadExpenses();
-
-document.getElementById("date").value =
-  new Date().toISOString().split("T")[0];
+async function
